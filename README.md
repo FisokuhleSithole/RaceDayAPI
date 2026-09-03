@@ -43,3 +43,7 @@ The platform enables Event Organisers to create and manage events, categories, a
 #### SQL Scripts Results
 <img width="1917" height="970" alt="image" src="https://github.com/user-attachments/assets/aa9b5b2d-1148-4109-ba4b-8b6c53bdd2dd" />
 
+### GitHub Workflows
+<img width="1917" height="493" alt="image" src="https://github.com/user-attachments/assets/e80115f5-313f-40b2-9bb0-c1d7cc8b48cb" />
+
+
