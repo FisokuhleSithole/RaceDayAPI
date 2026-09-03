@@ -1,0 +1,67 @@
+erDiagram
+    User {
+        int UserId PK
+        string Email UK
+        string PasswordHash
+        string FirstName
+        string LastName
+        string Role "Organiser or Participant"
+        datetime CreatedAt
+        string ProfilePictureUrl
+    }
+    OrganiserProfile {
+        int OrganiserId PK
+        int UserId FK
+        string OrganisationName
+        string PhoneNumber
+    }
+    ParticipantProfile {
+        int ParticipantId PK
+        int UserId FK
+        string PhoneNumber
+        string EmergencyContact
+    }
+    Event {
+        int EventId PK
+        int OrganiserId FK
+        string Name
+        string Description
+        datetime Date
+        string Location
+        string RouteDetails
+        string EventType "Running, Walking, Cycling"
+        int MaxParticipants
+        datetime CreatedAt
+        datetime? UpdatedAt
+    }
+    Category {
+        int CategoryId PK
+        int EventId FK
+        string Name "e.g., 10km, Half-Marathon, Elite"
+        string Description
+        decimal EntryFee
+    }
+    Enrolment {
+        int EnrolmentId PK
+        int ParticipantId FK
+        int CategoryId FK
+        datetime EnrolmentDate
+        string Status "Pending, Confirmed, Cancelled"
+        string? ResultTime "Formatted time (e.g., 01:23:45)"
+        int? Position
+    }
+    WeatherInfo {
+        int WeatherId PK
+        int EventId FK
+        datetime ForecastDate
+        string Condition "Sunny, Rainy, Cloudy"
+        decimal TemperatureCelsius
+        decimal WindSpeedKmph
+    }
+    User ||--o| OrganiserProfile : "has"
+    User ||--o| ParticipantProfile : "has"
+    OrganiserProfile ||--o{ Event : "manages"
+    Event ||--o{ Category : "has"
+    Event ||--o{ WeatherInfo : "has"
+    ParticipantProfile ||--o{ Enrolment : "makes"
+    Category ||--o{ Enrolment : "for"
