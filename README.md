@@ -40,4 +40,6 @@ The platform enables Event Organisers to create and manage events, categories, a
 - **Docker** - Containerization
 - **GitHub Actions** - CI/CD pipeline
 
-####
+#### SQL Scripts Results
+<img width="1917" height="970" alt="image" src="https://github.com/user-attachments/assets/aa9b5b2d-1148-4109-ba4b-8b6c53bdd2dd" />
+
