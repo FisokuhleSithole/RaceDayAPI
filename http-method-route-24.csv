@@ -1,0 +1,56 @@
+﻿HTTP Method,Route,Description,Role Required,Request Body,Expected Response
+Auth,,,,,
+POST,/api/auth/register,Registers a new user as either an Organiser or a Participant.,None (Public),"{ ""email"": ""user@example.com"", ""password"": ""P@ssw0rd"", ""firstName"": ""John"", ""lastName"": ""Doe"", ""role"": ""Participant"" }","201 Created - User creation successful with user details (excluding password).
+400 Bad Request - Validation errors.
+409 Conflict - Email already exists."
+POST,/api/auth/login,Authenticates a user and returns a JWT access token.,None (Public),"{ ""email"": ""user@example.com"", ""password"": ""P@ssw0rd"" }","200 OK - Login successful, returns JWT token and user role.
+401 Unauthorized - Invalid credentials.
+400 Bad Request - Missing/invalid fields."
+User Profile,,,,,
+GET,/api/users/me,Retrieves the profile of the currently authenticated user.,Any (Logged-in),None,"200 OK - Returns user details including role and profile data.
+401 Unauthorized - No token or invalid token."
+PUT,/api/users/me,Updates the profile of the currently authenticated user.,Any (Logged-in),"{ ""firstName"": ""Jane"", ""lastName"": ""Doe"", ""phoneNumber"": ""0821234567"", ... }","200 OK - Updated user and profile object.
+400 Bad Request - Validation errors.
+404 Not Found - User not found."
+Events,,,,,
+GET,/api/events,"Retrieves a list of all events (supports filters, sorting, pagination).",None (Public),None,200 OK - List of events.
+GET,/api/events/{eventId},Retrieves detailed information for a single event.,None (Public),None,"200 OK - Detailed event object.
+404 Not Found - Event ID does not exist."
+POST,/api/events,Creates a new event.,Organiser,"{ ""name"": ""Cape Town Cycle Tour"", ""description"": ""..."", ""date"": ""2026-09-15T08:00:00"", ""location"": ""Cape Town"", ""eventType"": ""Cycling"", ""maxParticipants"": 35000 }","201 Created - New event object.
+400 Bad Request - Validation errors.
+403 Forbidden - Not an Organiser."
+PUT,/api/events/{eventId},Updates an existing event.,Organiser,"{ ""name"": ""Updated Event Name"", ""description"": ""..."", ... }","200 OK - Updated event object.
+400 Bad Request - Validation errors.
+403 Forbidden - Not event owner.
+404 Not Found - Event ID not found."
+DELETE,/api/events/{eventId},Deletes an event and all associated data.,Organiser,None,"204 No Content - Deletion successful.
+403 Forbidden - Not event owner.
+404 Not Found - Event ID not found."
+Categories,,,,,
+GET,/api/events/{eventId}/categories,Retrieves all categories for an event.,None (Public),None,"200 OK - List of categories.
+404 Not Found - Event ID not found."
+POST,/api/events/{eventId}/categories,Creates a new category for an event.,Organiser,"{ ""name"": ""Half-Marathon"", ""description"": ""21.1km"", ""entryFee"": 250.00 }","201 Created - New category object.
+400 Bad Request - Validation errors.
+403 Forbidden - Not event owner.
+404 Not Found - Event not found."
+PUT,/api/categories/{categoryId},Updates a category.,Organiser,"{ ""name"": ""Full Marathon"", ""entryFee"": 350.00 }","200 OK - Updated category.
+403 Forbidden - Not event owner.
+404 Not Found - Category not found."
+DELETE,/api/categories/{categoryId},Deletes a category.,Organiser,None,"204 No Content - Deletion successful.
+403 Forbidden - Not event owner.
+404 Not Found - Category not found."
+Enrolments,,,,,
+GET,/api/enrolments/me,Retrieves all enrolments for the authenticated participant.,Participant,None,"200 OK - List of enrolments.
+401 Unauthorized - Not a Participant."
+POST,/api/enrolments,Creates a new enrolment for a category.,Participant,"{ ""categoryId"": 10 }","201 Created - New enrolment object.
+400 Bad Request - Validation errors.
+404 Not Found - Category not found."
+PUT,/api/enrolments/{enrolmentId},"Updates enrolment status (e.g., cancel).",Participant,"{ ""status"": ""Cancelled"" }","200 OK - Updated enrolment.
+403 Forbidden - Not enrolment owner.
+404 Not Found - Enrolment not found."
+Results & Admin,,,,,
+PUT,/api/enrolments/{enrolmentId}/result,Allows Organiser to capture/update participant’s result.,Organiser,"{ ""resultTime"": ""03:45:22"", ""position"": 15 }","200 OK - Updated enrolment with result.
+403 Forbidden - Not event organiser.
+404 Not Found - Enrolment not found."
+GET,/api/events/{eventId}/results,Retrieves all enrolments with results for an event.,Any (Logged-in),None,"200 OK - List of enrolments with results.
+404 Not Found - Event not found."
