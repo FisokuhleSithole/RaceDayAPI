@@ -78,6 +78,36 @@ namespace RaceDay.Api.Data
                 .WithMany(o => o.Events)
                 .HasForeignKey(e => e.OrganiserId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            // ============ Cascade behaviour adjustments ============
+            // Prevent multiple cascade paths to Enrolments.
+            // Deleting a Participant or Category will NOT auto-delete enrolments.
+
+            modelBuilder.Entity<Enrolment>()
+                .HasOne(e => e.Participant)
+                .WithMany(p => p.Enrolments)
+                .HasForeignKey(e => e.ParticipantId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Enrolment>()
+                .HasOne(e => e.Category)
+                .WithMany(c => c.Enrolments)
+                .HasForeignKey(e => e.CategoryId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // ============ Multiple cascade path fix ============
+            // Deleting a Participant or Category will NOT auto-delete enrolments.
+            modelBuilder.Entity<Enrolment>()
+                .HasOne(e => e.Participant)
+                .WithMany(p => p.Enrolments)
+                .HasForeignKey(e => e.ParticipantId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Enrolment>()
+                .HasOne(e => e.Category)
+                .WithMany(c => c.Enrolments)
+                .HasForeignKey(e => e.CategoryId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }
