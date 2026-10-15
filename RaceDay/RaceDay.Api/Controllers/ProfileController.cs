@@ -8,7 +8,7 @@ namespace RaceDay.Api.Controllers
 {
     [ApiController]
     [Route("api/profile")]
-    [SessionAuthFilter]   // ⭐ Requires login for ALL endpoints
+    [SessionAuthFilter]   // Requires login for ALL endpoints
     public class ProfileController : ControllerBase
     {
         private readonly RaceDayDbContext _db;
