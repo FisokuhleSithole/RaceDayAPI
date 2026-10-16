@@ -23,22 +23,29 @@ The platform enables Event Organisers to create and manage events, categories, a
 - Track race results and performance
 - Access event route and weather information
 
-##  Technology Stack
+##  Technologies Used
 
-### Backend
-- **.NET 8.0** - RESTful API development
-- **Entity Framework Core** - ORM for database operations
-- **SQL Server** - Relational database
-- **JWT** - Authentication and authorization
+| Technology | Purpose |
+|-----------|---------|
+| ASP.NET Core Web API 8.0 | RESTful API framework |
+| Entity Framework Core 8.0 | ORM with Code-First approach |
+| SQL Server (LocalDB) | Relational database |
+| BCrypt / SHA256 | Password hashing |
+| Server-side Sessions | Authentication state |
+| xUnit + EF Core InMemory | Unit testing (16 tests) |
+| Swagger / OpenAPI | API documentation & testing |
+| GitHub Actions | CI/CD pipeline |
 
-### Frontend
-- **ASP.NET Core MVC** - Web application
-- **Bootstrap 5** - Responsive UI framework
+---
 
-### Infrastructure
-- **Azure Blob Storage** - File storage (profile pictures)
-- **Docker** - Containerization
-- **GitHub Actions** - CI/CD pipeline
+##  Getting Started
+
+### Prerequisites
+- [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)
+- [SQL Server LocalDB](https://learn.microsoft.com/sql/database-engine/configure-windows/sql-server-express-localdb)
+- [Visual Studio 2022](https://visualstudio.microsoft.com/) or later
+- [GitHub Desktop](https://desktop.github.com/) (optional)
+
 
 #### SQL Scripts Results
 <img width="1917" height="970" alt="image" src="https://github.com/user-attachments/assets/aa9b5b2d-1148-4109-ba4b-8b6c53bdd2dd" />
@@ -49,5 +56,14 @@ The platform enables Event Organisers to create and manage events, categories, a
 
 ### Unlisted Video Link
 https://youtu.be/syHC9O8Mwak
+
+### AI Assistance Disclosure
+In accordance with the assessment rules on AI use, I disclose that I used Claude (Anthropic) as a supplementary tool during development for:
+
+Code review and debugging guidance
+
+Explaining Entity Framework Core concepts and best practices
+
+Suggesting error resolution strategies for compile and runtime issues
 
 
