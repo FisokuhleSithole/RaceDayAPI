@@ -1,36 +1,81 @@
-# This is a basic workflow to help you get started with Actions
+name: RaceDay CI/CD
 
-name: CI
-
-# Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
-    branches: [ "main" ]
+    branches: [ main, RaceDay_API_Part_2 ]
   pull_request:
-    branches: [ "main" ]
-
-  # Allows you to run this workflow manually from the Actions tab
+    branches: [ main ]
   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
+  # =========================================================
+  # JOB 1: Validate repository structure (Part 1 requirement)
+  # =========================================================
+  validate-structure:
+    name: Validate Repository Structure
     runs-on: ubuntu-latest
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
-
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
+      - name: Verify /docs folder exists
         run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+          if [ ! -d "docs" ]; then
+            echo " Missing /docs folder"
+            exit 1
+          fi
+          echo " /docs folder exists"
+
+      - name: Verify required Part 1 documents
+        run: |
+          MISSING=0
+          for file in docs/*; do
+            echo "Found: $file"
+          done
+          if [ ! -f "README.md" ]; then
+            echo " Missing README.md"
+            MISSING=1
+          fi
+          if [ $MISSING -eq 1 ]; then exit 1; fi
+          echo " Required files present"
+
+  # =========================================================
+  # JOB 2: Build and test the API (Part 2 requirement)
+  # =========================================================
+  build-and-test:
+    name: Build and Test API
+    runs-on: ubuntu-latest
+    needs: validate-structure
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup .NET 8
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Display .NET info
+        run: dotnet --info
+
+      - name: Restore dependencies
+        run: dotnet restore RaceDay/RaceDay.slnx
+
+      - name: Build solution
+        run: dotnet build RaceDay/RaceDay.slnx --no-restore --configuration Release
+
+      - name: Run unit tests
+        run: dotnet test RaceDay/RaceDay.slnx --no-build --configuration Release --verbosity normal --logger "trx;LogFileName=test-results.trx"
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: '**/test-results.trx'
+
+      - name: Summary
+        if: success()
+        run: echo " Build succeeded and all tests passed!"
