@@ -79,3 +79,18 @@ jobs:
       - name: Summary
         if: success()
         run: echo " Build succeeded and all tests passed!"
+
+  # =========================================================
+  # JOB 3: Dockerfile (Part 3 requirement)
+  # =========================================================
+  docker-build:
+    name: Build Docker Image
+    runs-on: ubuntu-latest
+    needs: build-and-test
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build MVC Docker Image
+        run: docker build -f RaceDay.Mvc/Dockerfile -t raceday-mvc:part3 .
