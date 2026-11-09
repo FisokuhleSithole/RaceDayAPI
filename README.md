@@ -53,6 +53,10 @@ The platform enables Event Organisers to create and manage events, categories, a
 ### GitHub Workflows
 <img width="1141" height="407" alt="image" src="https://github.com/user-attachments/assets/a38b3d57-ae13-46fe-97e5-4650a99b766b" />
 
+### Docker build
+<img width="1908" height="813" alt="image" src="https://github.com/user-attachments/assets/5c967669-1516-4675-889b-c23abd309e06" />
+
+
 ## Part 3 — MVC Web Application, Blob Storage & Docker
 
 ### Architecture
