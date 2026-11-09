@@ -95,7 +95,7 @@ namespace RaceDay.Contracts
 
         [Required]
         [Range(0.1, 1000, ErrorMessage = "Distance must be between 0.1 and 1000 km.")]
-        public decimal DistanceKm { get; set; }   // ⭐ Required by feedback
+        public decimal DistanceKm { get; set; }   //  Required by feedback
 
         public string? RouteDetails { get; set; }
 
@@ -120,6 +120,7 @@ namespace RaceDay.Contracts
         public int? MaxParticipants { get; set; }
         public int OrganiserId { get; set; }
         public DateTime CreatedAt { get; set; }
+        public string? BannerImageUrl { get; set; }
     }
 
     // ============================================

@@ -22,12 +22,14 @@ namespace RaceDay.Api.Models
         [Required, StringLength(255)]
         public string Location { get; set; } = string.Empty;
 
-        // ⭐ Required field per Part 1 feedback
+        //  Required field per Part 1 feedback
         [Required]
         [Column(TypeName = "decimal(6,2)")]
         public decimal DistanceKm { get; set; }
 
         public string? RouteDetails { get; set; }
+
+        public string? BannerImageUrl { get; set; }
 
         [Required, StringLength(50)]
         public string EventType { get; set; } = string.Empty;  // Run, Walk, Cycle

@@ -1,0 +1,44 @@
+﻿@model List<RaceDay.Contracts.ResultDto>
+@{ ViewData["Title"] = "Capture Results"; }
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Results for <span class="text-primary">@ViewBag.EventName</span></h2>
+    <a asp-action="Events" class="btn btn-secondary">Back to Events</a>
+</div>
+
+@if (TempData["Success"] != null) { <div class="alert alert-success">@TempData["Success"]</div> }
+
+<div class="alert alert-info">
+    <strong>Note:</strong> To capture a result, ensure the participant is enrolled first.
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="card shadow-sm mb-4">
+            <div class="card-header bg-dark text-white"><h5 class="mb-0">Capture Result</h5></div>
+            <div class="card-body">
+                <form asp-action="CaptureResult" asp-route-eventId="@ViewBag.EventId" method="post">
+                    <div class="mb-2"><label class="form-label">Enrolment ID</label><input name="enrolmentId" type="number" class="form-control" required placeholder="e.g., 1" /></div>
+                    <div class="mb-2"><label class="form-label">Finish Time</label><input name="finishTime" class="form-control" required placeholder="HH:MM:SS" pattern="\d{1,2}:\d{2}:\d{2}" /></div>
+                    <div class="mb-3"><label class="form-label">Position</label><input name="position" type="number" class="form-control" required /></div>
+                    <button type="submit" class="btn btn-success w-100">Save Result</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="card shadow-sm">
+            <div class="card-body p-0">
+                <table class="table table-striped mb-0">
+                    <thead class="table-dark"><tr><th>Pos</th><th>Participant</th><th>Category</th><th>Time</th></tr></thead>
+                    <tbody>
+                        @foreach (var r in Model)
+                        {
+                            <tr><td class="fw-bold">@r.Position</td><td>@r.ParticipantName</td><td>@r.CategoryName</td><td>@r.FinishTime</td></tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

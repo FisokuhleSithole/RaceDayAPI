@@ -237,5 +237,22 @@ namespace RaceDay.Api.Controllers
 
             return NoContent();
         }
+
+        [HttpPost("{id:int}/banner")]
+        [RoleAuthorizeFilter("Organiser")]
+        public async Task<IActionResult> UploadBanner(int id, IFormFile file, [FromServices] RaceDay.Api.Services.BlobStorageService blobStorage)
+        {
+            var userId = HttpContext.Session.GetInt32("UserId");
+            var organiser = await _db.OrganiserProfiles.FirstOrDefaultAsync(o => o.UserId == userId);
+
+            var evt = await _db.Events.FirstOrDefaultAsync(e => e.EventId == id && e.OrganiserId == organiser!.OrganiserId);
+            if (evt == null) return NotFound(new { message = "Event not found or you do not own it." });
+
+            string url = await blobStorage.UploadAsync(file, "event-banners");
+            evt.BannerImageUrl = url;
+            await _db.SaveChangesAsync();
+
+            return Ok(new { imageUrl = url });
+        }
     }
 }

@@ -1,0 +1,43 @@
+﻿@model List<RaceDay.Contracts.EventDto>
+@{ ViewData["Title"] = "Upcoming Events"; var safeEvents = Model ?? new List<RaceDay.Contracts.EventDto>(); }
+
+<div class="row mb-4">
+    <div class="col-12">
+        <h2 class="fw-bold">Welcome to RaceDay, @ViewBag.DisplayName!</h2>
+        <p class="text-muted">Browse and enter upcoming events.</p>
+    </div>
+</div>
+
+@if (TempData["Success"] != null) { <div class="alert alert-success">@TempData["Success"]</div> }
+@if (TempData["Error"] != null) { <div class="alert alert-danger">@TempData["Error"]</div> }
+
+@if (!safeEvents.Any())
+{
+    <div class="alert alert-info">No upcoming events found. Check back later!</div>
+}
+else
+{
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        @foreach (var evt in safeEvents)
+        {
+            <div class="col">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <span class="badge bg-primary mb-2">@evt.EventType</span>
+                        <h5 class="card-title fw-bold">@evt.Name</h5>
+                        <p class="card-text text-muted small">@evt.Description</p>
+                        
+                        <ul class="list-unstyled small mb-3">
+                            <li> <strong>Date:</strong> @evt.EventDate.ToString("dd MMM yyyy")</li>
+                            <li> <strong>Location:</strong> @evt.Location</li>
+                            <li> <strong>Distance:</strong> @evt.DistanceKm km</li>
+                        </ul>
+                    </div>
+                    <div class="card-footer bg-white border-top-0">
+                        <a asp-action="EventDetails" asp-route-id="@evt.EventId" class="btn btn-outline-dark w-100">View Details & Enter</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}

@@ -1,0 +1,27 @@
+﻿@model List<RaceDay.Contracts.ResultDto>
+@{ ViewData["Title"] = "My Results"; }
+
+<h2 class="fw-bold mb-4">My Race Results</h2>
+
+<div class="card shadow-sm">
+    <div class="card-body p-0">
+        <table class="table table-striped mb-0">
+            <thead class="table-dark"><tr><th>Event</th><th>Category</th><th>Finish Time</th><th>Position</th></tr></thead>
+            <tbody>
+                @if(Model != null && Model.Any()) {
+                    foreach (var r in Model)
+                    {
+                        <tr>
+                            <td class="fw-bold">@r.EventName</td>
+                            <td>@r.CategoryName</td>
+                            <td class="fw-bold text-success">@r.FinishTime</td>
+                            <td>@r.Position</td>
+                        </tr>
+                    }
+                } else {
+                    <tr><td colspan="4" class="text-center text-muted">No results captured yet. Check back after the event!</td></tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
