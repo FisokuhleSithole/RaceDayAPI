@@ -1,0 +1,31 @@
+﻿@model List<RaceDay.Contracts.EnrolmentDto>
+@{ ViewData["Title"] = "My Events"; }
+
+<h2 class="fw-bold mb-4">My Enrolments</h2>
+
+<div class="card shadow-sm">
+    <div class="card-body p-0">
+        <table class="table table-striped mb-0">
+            <thead class="table-dark"><tr><th>Event</th><th>Category</th><th>Date</th><th>Status</th></tr></thead>
+            <tbody>
+                @if(Model != null && Model.Any()) {
+                    foreach (var e in Model)
+                    {
+                        <tr>
+                            <td class="fw-bold">@e.EventName</td>
+                            <td>@e.CategoryName</td>
+                            <td>@e.EnrolmentDate.ToString("dd MMM yyyy")</td>
+                            <td>
+                                @if (e.Status == "Confirmed") { <span class="badge bg-success">Confirmed</span> }
+                                else if (e.Status == "Pending") { <span class="badge bg-warning text-dark">Pending</span> }
+                                else { <span class="badge bg-secondary">@e.Status</span> }
+                            </td>
+                        </tr>
+                    }
+                } else {
+                    <tr><td colspan="4" class="text-center text-muted">You haven't enrolled in any events yet.</td></tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
