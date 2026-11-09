@@ -36,6 +36,7 @@ builder.Services.AddSwaggerGen(c =>
 // 5. HttpContextAccessor for session access
 builder.Services.AddHttpContextAccessor();
 
+builder.Services.AddScoped<RaceDay.Api.Services.BlobStorageService>();
 var app = builder.Build();
 
 // 6. HTTP pipeline

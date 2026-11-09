@@ -8,7 +8,7 @@
                 <h4 class="mb-0">Create New Event</h4>
             </div>
             <div class="card-body">
-                <form asp-action="CreateEvent" method="post">
+                <form asp-action="CreateEvent" method="post" enctype="multipart/form-data">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
                     <div class="mb-3">
@@ -57,6 +57,10 @@
 
                     <div class="d-flex justify-content-between mt-4">
                         <a asp-action="Events" class="btn btn-secondary">Cancel</a>
+                        <div class="mb-3">
+                       <label asp-for="BannerFile" class="form-label fw-bold">Event Banner Image</label>
+                      <input asp-for="BannerFile" type="file" accept="image/*" class="form-control" />
+                    </div>
                         <button type="submit" class="btn btn-success px-5">Create Event</button>
                     </div>
                 </form>
