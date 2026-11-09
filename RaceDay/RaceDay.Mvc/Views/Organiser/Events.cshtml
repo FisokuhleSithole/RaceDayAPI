@@ -1,0 +1,47 @@
+﻿@model List<RaceDay.Contracts.EventDto>
+@{ ViewData["Title"] = "My Events"; }
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>My Events</h2>
+    <a asp-action="CreateEvent" class="btn btn-success">+ Create New Event</a>
+</div>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
+
+<div class="card shadow-sm">
+    <div class="card-body p-0">
+        <table class="table table-striped mb-0">
+            <thead class="table-dark">
+                <tr>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Date</th>
+                    <th>Location</th>
+                    <th>Distance</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var evt in Model)
+                {
+                    <tr>
+                        <td class="fw-bold">@evt.Name</td>
+                        <td><span class="badge bg-info text-dark">@evt.EventType</span></td>
+                        <td>@evt.EventDate.ToString("dd MMM yyyy")</td>
+                        <td>@evt.Location</td>
+                        <td>@evt.DistanceKm km</td>
+                        <td>
+                            <a asp-action="EditEvent" asp-route-id="@evt.EventId" class="btn btn-sm btn-primary">Edit</a>
+                            <form asp-action="DeleteEvent" asp-route-id="@evt.EventId" method="post" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this event?');">
+                                <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
