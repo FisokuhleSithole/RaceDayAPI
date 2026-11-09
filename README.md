@@ -53,6 +53,28 @@ The platform enables Event Organisers to create and manage events, categories, a
 ### GitHub Workflows
 <img width="1141" height="407" alt="image" src="https://github.com/user-attachments/assets/a38b3d57-ae13-46fe-97e5-4650a99b766b" />
 
+## Part 3 — MVC Web Application, Blob Storage & Docker
+
+### Architecture
+The application is a 3-tier architecture:
+1. **RaceDay.Mvc**: Front-end Razor app (sessions, role-based UI).
+2. **RaceDay.Api**: RESTful API (business logic).
+3. **SQL Server / Local Storage**: Data persistence and image storage.
+
+### How to Run Locally
+1. Start the API: `dotnet run --project RaceDay/RaceDay.Api`
+2. Start the MVC: `dotnet run --project RaceDay/RaceDay.Mvc`
+3. Open `http://localhost:5096` in your browser.
+
+### Docker Setup
+To run the MVC application inside Docker:
+
+1. Ensure **Docker Desktop** is running.
+2. **Important:** The API must be running on your host machine.
+3. Build the image (run from the solution root):
+   ```bash
+   docker build -f RaceDay.Mvc/Dockerfile -t raceday-mvc:part3 .
+
 
 ### Unlisted Video Link
 https://youtu.be/syHC9O8Mwak
