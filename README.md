@@ -81,7 +81,7 @@ To run the MVC application inside Docker:
 
 
 ### Unlisted Video Link
-https://youtu.be/syHC9O8Mwak
+https://www.youtube.com/watch?v=oX9mg6LIq3c
 
 ### AI Assistance Disclosure
 In accordance with the assessment rules on AI use, I disclose that I used Claude (Anthropic) as a supplementary tool during development for:
