@@ -93,5 +93,5 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Build MVC Docker Image
-       run: docker build -f RaceDay.Mvc/Dockerfile -t raceday-mvc:part3 .
+       run: docker build -f RaceDay/RaceDay.Mvc/Dockerfile -t raceday-mvc:part3 .
         
